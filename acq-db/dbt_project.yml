@@ -1,0 +1,97 @@
+
+# Name your package! Package names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'lereta'
+version: '1.0'
+
+# This setting configures which "profile" dbt uses for this project. Profiles contain
+# database connection information, and should be configured in the  ~/.dbt/profiles.yml file
+profile: 'acq-data-pipeline'
+
+##################################
+#### FILE PATH CONFIGURATIONS ####
+##################################
+
+# The following configs specify directories that dbt uses to operate. All
+# paths are specified relative to the path of dbt_project.yml.
+
+# ALL FILE PATH CONFIGURATIONS ARE OPTIONAL, the default values are listed below.
+
+# source-paths: Specify which path(s) dbt should look in to find models. Model
+# are.sql files. Model and source schema files (.yml files) should also be
+# included in this path
+source-paths: ["models"]
+
+# analysis-paths: Specify which path(s) dbt should look in to find analytical
+# queries. These queries are compiled, but not executed, by dbt.
+analysis-paths: ["analysis"]
+
+# test-paths: Specify which path(s) dbt should look in to find data test
+# definitions.
+test-paths: ["tests"]
+
+# data-paths: Specify which path(s) dbt should look in to find CSV files.
+# Running `dbt seed` will load these CSVs as tables in your warehouse.
+data-paths: ["data"]
+
+# macro-paths: Specify which path(s) dbt should look in to find macros. These
+# macros will be globally available to all models in your project.
+macro-paths: ["macros"]
+
+# snapshot-paths: Specify with path(s) dbt should look in to finds napshots.
+# Running `dbt snapshot` will run these snapshots.
+snapshot-paths: ["snapshots"]
+
+# target-path: Specify which path dbt should write  compiled SQL to.
+target-path: "target"
+
+# log-path: Specify which path dbt should write debug logs to.
+log-path: "logs"
+
+# clean-targets: Specify which path(s) should be removed by the clean task. Run
+# `dbt clean` to delete these directories
+clean-targets: ["target", "dbt_modules"]
+
+#################################
+#### RESOURCE CONFIGURATIONS ####
+#################################
+
+# The following section contains configurations that define how your resources
+# are instantiated by dbt. You can configure `models`, and `seeds` from here.
+# You can configure resources from both your own project, and and installed 
+# packages included as dependencies.
+#
+# Options are specified on a per-package, per-directory, and per-model basis.
+# The configs are inherited, so configs applied to a package can be overridden
+# for directories and models contained within that package.
+#
+# The configuration structure within a package should mirror the directory
+# structure within that package. The example configs provided below are based
+# on the following directory structure.
+#
+# dbt_project.yml
+# models/
+# ├── adwords
+# │   └── adwords_ads.sql
+# └── snowplow
+#     ├── base
+#     │   └── snowplow_events.sql
+#     └── snowplow_sessions.sql
+
+# You can define configurations for models in the `source-paths` directory here.
+# Using these configurations, you can enable or disable models, change how they
+# are materialized, and more!
+
+# In this example config, we tell dbt to build all models in the example/ directory
+# as views (the default). These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+# models:
+#   my_new_package:
+#       # Applies to all files under models/example/
+#       example:
+#           materialized: view
+
+models:
+  enabled: true    # configs defined here are applied to _all_ packages
+  materialized: view   # but can be overridden in more specific configs below
